@@ -20,19 +20,17 @@ public class Statistics {
     @Nullable
     private Long id;
 
-    // Relacja OneToOne: jedna Statistics należy do jednego Usera
-    // Odpowiednik klucza obcego user_id w tabeli statistics
     @OneToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false, unique = true)
     private User user;
 
-    @Column(name = "totalTrainings", nullable = false)
+    @Column(name = "total_trainings", nullable = false)
     private int totalTrainings;
 
-    @Column(name = "totalDistance")
+    @Column(name = "total_distance", nullable = false)
     private double totalDistance;
 
-    @Column(name = "totalCaloriesBurned")
+    @Column(name = "total_calories_burned", nullable = false)
     private int totalCaloriesBurned;
 
     public Statistics(User user, int totalTrainings, double totalDistance, int totalCaloriesBurned) {

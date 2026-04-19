@@ -1,5 +1,6 @@
 package pl.wsb.fitnesstracker.training.api;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -19,9 +20,9 @@ public class Training {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Nullable
     private Long id;
 
-    // Relacja ManyToOne: wiele treningów może należeć do jednego Usera
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -32,15 +33,14 @@ public class Training {
     @Column(name = "end_time", nullable = false)
     private Date endTime;
 
-    // ORDINAL zapisuje pozycję enuma jako liczbę (0, 1, 2...)
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     @Column(name = "activity_type", nullable = false)
     private ActivityType activityType;
 
-    @Column(name = "distance")
+    @Column(nullable = false)
     private double distance;
 
-    @Column(name = "average_speed")
+    @Column(name = "average_speed", nullable = false)
     private double averageSpeed;
 
     public Training(
