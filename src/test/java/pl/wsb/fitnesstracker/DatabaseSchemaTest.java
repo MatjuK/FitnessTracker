@@ -133,7 +133,7 @@ class DatabaseSchemaTest {
         try (Connection conn = dataSource.getConnection()) {
             Set<String> cols = tableColumns(conn, "health_metrics");
             assertThat(cols).contains("date", "weight", "height");
-            // heartRate - Hibernate może zapisać jako heartrate lub heart_rate
+            // heartRate
             assertThat(cols.stream().anyMatch(c -> c.toLowerCase().contains("heartrate")
                     || c.toLowerCase().contains("heart_rate"))).isTrue();
         }
