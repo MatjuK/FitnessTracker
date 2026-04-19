@@ -12,7 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.wsb.fitnesstracker.training.api.Training;
 import pl.wsb.fitnesstracker.training.internal.ActivityType;
 import pl.wsb.fitnesstracker.user.api.User;
-
+import pl.wsb.fitnesstracker.event.EventRepository;
+import java.time.LocalDate;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,10 +22,6 @@ import java.util.List;
 import static java.time.LocalDate.now;
 import static java.util.Objects.isNull;
 
-/**
- * Sample init data loader. If the application is run with `loadInitialData` profile, then on application startup it will fill the database with dummy data,
- * for the manual testing purposes. Loader is triggered by {@link ContextRefreshedEvent } event
- */
 @Component
 @Profile("loadInitialData")
 @Slf4j
@@ -35,6 +32,8 @@ class InitialDataLoader {
     private final JpaRepository<User, Long> userRepository;
 
     private final JpaRepository<Training, Long> trainingRepository;
+
+    private final EventRepository eventRepository;
 
     @EventListener
     @Transactional
@@ -47,9 +46,14 @@ class InitialDataLoader {
         List<User> sampleUserList = generateSampleUsers();
         List<Training> sampleTrainingList = generateTrainingData(sampleUserList);
 
+        System.out.println("====== TESTY EVENT REPOSITORY ======");
+        System.out.println("Nadchodzące eventy: " + eventRepository.findUpcoming(LocalDate.now()));
+        System.out.println("Eventy w Poznaniu: " + eventRepository.findByCity("Poznań"));
+        System.out.println("====================================");
 
         log.info("Finished loading initial data");
     }
+
 
     private User generateUser(String name, String lastName, int age) {
         User user = new User(name,
