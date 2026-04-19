@@ -40,13 +40,14 @@ przez które aplikacja **czyta i zapisuje** dane. Plan zajęć (1.5h):
 ## 1. Nowe encje w modelu
 
 W LAB02 zrobiliśmy encje: `User`, `Training`, `Statistics`, `HealthMetrics`.
-Dzisiaj dokładamy jeszcze **trzy**, żeby mieć co pytać w zapytaniach:
+Dzisiaj dokładamy jeszcze **cztery**, żeby mieć co pytać w zapytaniach:
 
-| Encja            | Po co?                                                                           |
-|------------------|----------------------------------------------------------------------------------|
-| `WorkoutSession` | Log jednego treningu — współrzędne GPS startu/końca i wysokość (`altitude`).     |
-| `Event`          | Wydarzenie sportowe (np. maraton) — ma `name`, `startDate`, `location`.          |
-| `UserEvent`      | Rejestracja użytkownika na Event — łączy `User` z `Event` + `registrationDate`.  |
+| Encja            | Po co?                                                                             |
+|------------------|------------------------------------------------------------------------------------|
+| `WorkoutSession` | Log jednego treningu — współrzędne GPS startu/końca i wysokość (`altitude`).       |
+| `Event`          | Wydarzenie sportowe (np. maraton) — ma `name`, `startDate`, `location`.            |
+| `UserEvent`      | Rejestracja użytkownika na Event — łączy `User` z `Event` + `registrationDate`.    |
+| `Achievement`    | Osiągnięcie zdobyte przez użytkownika (np. "Pierwsze 10 km") — `name`, `earnedAt`. |
 
 **Relacje (używamy tylko `@ManyToOne` — jeden nowy typ relacji):**
 
@@ -54,11 +55,17 @@ Dzisiaj dokładamy jeszcze **trzy**, żeby mieć co pytać w zapytaniach:
   np. gdy użytkownik zrobił przerwę i wznowił).
 - `UserEvent` → `User`: `@ManyToOne` (jeden użytkownik może mieć wiele rejestracji).
 - `UserEvent` → `Event`: `@ManyToOne` (na jeden event zapisuje się wielu użytkowników).
+- `Achievement` → `User`: `@ManyToOne` (jeden użytkownik może zdobyć wiele osiągnięć).
 
-> **Wskazówka:** klasa `WorkoutSession` już jest w projekcie (`pl.wsb.fitnesstracker.workoutsession`),
+> **Wskazówka 1:** klasa `WorkoutSession` już jest w projekcie (`pl.wsb.fitnesstracker.workoutsession`),
 > ale to na razie zwykły POJO. Twoim zadaniem jest dodać `@Entity`, poprawne `@Id`
 > (`Long` + `@GeneratedValue`) i zamienić pole `trainingId` na relację `@ManyToOne` do
 > `Training`. Pole `timestamp` zmień z `String` na `LocalDateTime`.
+>
+> **Wskazówka 2:** pakiet `pl.wsb.fitnesstracker.achievement` już istnieje, ale jest
+> pusty (samo `package-info.java`). Utwórz w nim klasę `Achievement` od zera: `@Entity`,
+> `@Id` typu `Long` + `@GeneratedValue`, pola `name` (String), `earnedAt`
+> (`LocalDateTime`) oraz relacja `@ManyToOne` do `User`.
 
 Uzupełnij schemat (`db_schema.png`).
 
