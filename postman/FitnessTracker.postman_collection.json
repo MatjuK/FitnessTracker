@@ -1,0 +1,56 @@
+{
+  "info": {
+    "name": "FitnessTracker - User API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "GET all users",
+      "request": { "method": "GET", "url": "http://localhost:8080/v1/users" }
+    },
+    {
+      "name": "GET simple users",
+      "request": { "method": "GET", "url": "http://localhost:8080/v1/users/simple" }
+    },
+    {
+      "name": "GET user by id",
+      "request": { "method": "GET", "url": "http://localhost:8080/v1/users/1" }
+    },
+    {
+      "name": "GET users by email fragment",
+      "request": { "method": "GET", "url": "http://localhost:8080/v1/users/email?email=domain" }
+    },
+    {
+      "name": "GET users older than",
+      "request": { "method": "GET", "url": "http://localhost:8080/v1/users/older/2000-01-01" }
+    },
+    {
+      "name": "POST create user",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"Mike\",\n  \"lastName\": \"Scott\",\n  \"birthdate\": \"1999-09-29\",\n  \"email\": \"mike.scott@domain.com\"\n}"
+        },
+        "url": "http://localhost:8080/v1/users"
+      }
+    },
+    {
+      "name": "PUT update user",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"Updated\",\n  \"lastName\": \"User\",\n  \"birthdate\": \"1990-01-01\",\n  \"email\": \"updated@domain.com\"\n}"
+        },
+        "url": "http://localhost:8080/v1/users/1"
+      }
+    },
+    {
+      "name": "DELETE user",
+      "request": { "method": "DELETE", "url": "http://localhost:8080/v1/users/1" }
+    }
+  ]
+}
